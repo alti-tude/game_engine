@@ -1,0 +1,6 @@
+set(SOURCES 
+    ${SOURCES}
+    ${CMAKE_CURRENT_SOURCE_DIR}/Renderer.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Window.cpp 
+    PARENT_SCOPE
+)
