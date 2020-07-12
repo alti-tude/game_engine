@@ -12,10 +12,10 @@ add_subdirectory(external/glew-2.1.0/build/cmake)
 add_subdirectory(${PROJECT_SOURCE_DIR}/src)
 
 include_directories(
-    external/glfw-3.3.2/include
-    external/glew-2.1.0/include
-    external/glm/glm
-    src/includes
+    ${PROJECT_SOURCE_DIR}/external/glfw-3.3.2/include
+    ${PROJECT_SOURCE_DIR}/external/glew-2.1.0/include
+    ${PROJECT_SOURCE_DIR}/external/glm/glm
+    ${PROJECT_SOURCE_DIR}/src/includes
 )
 
 add_executable(simmulator ${SOURCES})
