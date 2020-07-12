@@ -24,6 +24,12 @@ int main(){
         vec.push_back(v);
         v = {{x+1,1.0f, 0.0f}};
         vec.push_back(v);
+        v = {{x,1.0f, 0.0f}};
+        vec.push_back(v);
+        v = {{x+1,-1.0f, 0.0f}};
+        vec.push_back(v);
+        v = {{x+2,1.0f, 0.0f}};
+        vec.push_back(v);
 
         renderer.startBatch();
         renderer.drawTraingle(vec);
