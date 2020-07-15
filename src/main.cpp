@@ -10,9 +10,9 @@
 
 int main(){
     
-    Shader shader = Shader("/media/altitude/hdd/projects/traffic_management/src/MakeLists.txt", "/media/altitude/hdd/projects/traffic_management/src/ain.cpp");
+    Shader shader = Shader("res/Shaders/vertex_shader.vs", "res/Shaders/fragment_shader.fs");
     return 0;
-    Window window = Window(800, 600, "simmulator");
+    Window window = Window(800, 600, "simulator");
     Renderer renderer = Renderer();
 
     float x = -1;

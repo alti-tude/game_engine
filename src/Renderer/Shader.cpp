@@ -9,26 +9,27 @@ struct ShaderFiles{
 static ShaderFiles loadShaders(const std::string& vertex_file_name, const std::string& fragment_file_name){
     std::ifstream vertex_file;
     std::ifstream fragment_file;
+
     vertex_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-    // fragment_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+    fragment_file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 
     try{
-        vertex_file.open("asdasd", std::ios_base::in);
-        // fragment_file.open(fragment_file_name.c_str(), std::ios_base::in);
+        vertex_file.open(vertex_file_name.c_str(), std::ios::in);
+        fragment_file.open(fragment_file_name.c_str(), std::ios::in);
 
         std::stringstream vertex_stream;
         std::stringstream fragment_stream;
 
-        // vertex_stream << vertex_file.rdbuf();
-        // fragment_stream << fragment_file.rdbuf();
+        vertex_stream << vertex_file.rdbuf();
+        fragment_stream << fragment_file.rdbuf();
 
         vertex_file.close();
-        // fragment_file.close();
+        fragment_file.close();
 
         return {vertex_stream.str(), fragment_stream.str()};
         
     } catch(std::ifstream::failure e){
-        throw new ShaderFileLoadException("Some shade file failed to load", e.code().message());
+        throw new ShaderFileLoadException("Some shade file failed to load", e.what());
     }
 
 }
