@@ -13,7 +13,7 @@ public:
     Window(size_t height, size_t width, std::string title);
 
     bool closed() const {return glfwWindowShouldClose(this->window);} 
-    void swapBuffers(){glfwSwapBuffers(this->window);}
+    void swapBuffers() {glfwSwapBuffers(this->window);}
     void pollEvents() const {glfwPollEvents();}
     void terminate() const {glfwTerminate();}
 };

@@ -9,6 +9,10 @@
 #include "string"
 #include "vector"
 #include "iostream"
+#include "map"
+
+#include "Config.h"
+#include "Vertex.h"
 
 #define GLEW_STATIC
 #define GLCall(x) GLClearError();\
@@ -27,20 +31,7 @@ static bool GLLogCall(const char* function, const char* file, int line){
     }
     return true; 
 }
- 
-static struct Config{
-    unsigned int num_vertices;
-    unsigned int vertex_size; 
 
-    Config(){
-        num_vertices = 10;
-    }
-} config;
-
-struct Vertex{
-    glm::vec3 position;
-    glm::vec4 color;
-};
 
 class Renderer{
 private:
@@ -51,13 +42,16 @@ private:
     
     std::vector<float> m_vertex_data;
     std::vector<unsigned int> m_index_data;
+    std::vector<Vertex> m_vertex_store;
 
 public:
     Renderer();
     void draw();
     void endBatch();
     void startBatch();
-    void drawTraingle(std::vector<Vertex> vertices); 
+    void drawTraingle(const std::vector<Vertex>& vertices); 
+    
+    static void rendererGlewInit();
 };
 
 #endif

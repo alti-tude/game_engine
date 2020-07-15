@@ -16,7 +16,7 @@ set(DEPENDENCIES copy_shader_files)
 
 add_subdirectory(external/glfw-3.3.2)
 add_subdirectory(external/glew-2.1.0/build/cmake)
-add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/Renderer)
+add_subdirectory(${CMAKE_CURRENT_LIST_DIR}/src)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/external/glfw-3.3.2/include
@@ -24,7 +24,7 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/external/glm/glm
     ${PROJECT_SOURCE_DIR}/includes
 )
-
+message(STATUS ${SOURCES})
 add_executable(simulator ${SOURCES})
 target_link_libraries(simulator glew glfw)
 add_dependencies(simulator ${DEPENDENCIES})

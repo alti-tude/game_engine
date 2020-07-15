@@ -10,10 +10,11 @@
 
 int main(){
     
+    Window window = Window(800, 600, "simulator"); //GLFW INIT
+    Renderer::rendererGlewInit();//GLEW INIT
     Shader shader = Shader("res/Shaders/vertex_shader.vs", "res/Shaders/fragment_shader.fs");
-    return 0;
-    Window window = Window(800, 600, "simulator");
-    Renderer renderer = Renderer();
+    shader.bind();
+    Renderer renderer = Renderer(); 
 
     float x = -1;
     while (!window.closed())
@@ -21,17 +22,17 @@ int main(){
         glClear(GL_COLOR_BUFFER_BIT);
 
         std::vector<Vertex> vec;
-        Vertex v = {{x,-1.0f, 0.0f}};
+        Vertex v = {{-1.0f,-1.0f, 0.0f}, {1.0, 0.0f, 0.0f, 1.0f}};
         vec.push_back(v);
-        v = {{x+2,-1.0f, 0.0f}};
+        v = {{1.0f,-1.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f}};
         vec.push_back(v);
-        v = {{x+1,1.0f, 0.0f}};
+        v = {{1.0f,1.0f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}};
         vec.push_back(v);
-        v = {{x,1.0f, 0.0f}};
+        v = {{1.0f,1.0f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}};
         vec.push_back(v);
-        v = {{x+1,-1.0f, 0.0f}};
+        v = {{-1.0f,-1.0f, 0.0f}, {1.0, 0.0f, 0.0f, 1.0f}};
         vec.push_back(v);
-        v = {{x+2,1.0f, 0.0f}};
+        v = {{-1.0f,1.0f, 0.0f}, {0, 0.0f, 0.0f, 1.0f}};
         vec.push_back(v);
 
         renderer.startBatch();
@@ -42,7 +43,7 @@ int main(){
         window.swapBuffers();
         window.pollEvents();
     }
-
+    shader.unbind();
     window.terminate();
     return 0;
 }
