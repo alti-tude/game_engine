@@ -39,7 +39,7 @@ static struct Config{
 
 struct Vertex{
     glm::vec3 position;
-    // glm::vec4 color;
+    glm::vec4 color;
 };
 
 class Renderer{
@@ -51,8 +51,6 @@ private:
     
     std::vector<float> m_vertex_data;
     std::vector<unsigned int> m_index_data;
-
-    void initGL();
 
 public:
     Renderer();

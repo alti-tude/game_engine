@@ -2,13 +2,21 @@
 #define EXCEPTION_H
 
 #include "string"
+#include "iostream"
 
-class BaseException{
-    BaseException(std::string message);
+class CustomBaseException{
+public:
+    CustomBaseException(std::string message) { std::cerr << message << std::endl; }
+    CustomBaseException(std::string message, std::string cause) { 
+        std::cerr << message << std::endl;
+        std::cerr << ">>>> " << std::endl << cause << std::endl;
+    }
 };
 
-class NoGlwfWindowContextException: BaseException{
-    NoGlwfWindowContextException() 
-        :BaseException("No glfw window context provided to renderer. Call with window argument first")
+class ShaderFileLoadException: CustomBaseException{
+public:
+    ShaderFileLoadException(std::string message, std::string cause) 
+        :CustomBaseException(message, cause){};
 };
+
 #endif

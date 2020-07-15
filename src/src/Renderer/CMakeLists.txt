@@ -2,5 +2,6 @@ set(SOURCES
     ${SOURCES}
     ${CMAKE_CURRENT_SOURCE_DIR}/Renderer.cpp 
     ${CMAKE_CURRENT_SOURCE_DIR}/Window.cpp 
+    ${CMAKE_CURRENT_SOURCE_DIR}/Shader.cpp 
     PARENT_SCOPE
 )

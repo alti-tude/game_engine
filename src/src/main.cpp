@@ -3,20 +3,23 @@
 #include "GLFW/glfw3.h"
 
 #include "glm/glm.hpp"
+
 #include "Renderer.h"
 #include "Window.h"
+#include "Shader.h"
 
 int main(){
+    
+    Shader shader = Shader("/media/altitude/hdd/projects/traffic_management/src/MakeLists.txt", "/media/altitude/hdd/projects/traffic_management/src/ain.cpp");
+    return 0;
     Window window = Window(800, 600, "simmulator");
     Renderer renderer = Renderer();
 
     float x = -1;
     while (!window.closed())
     {
-        /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        /* Swap front and back buffers */
         std::vector<Vertex> vec;
         Vertex v = {{x,-1.0f, 0.0f}};
         vec.push_back(v);
