@@ -16,6 +16,7 @@ public:
     void swapBuffers() {glfwSwapBuffers(this->window);}
     void pollEvents() const {glfwPollEvents();}
     void terminate() const {glfwTerminate();}
+    GLFWwindow* getWindow() const {return this->window;}
 };
 
 #endif
