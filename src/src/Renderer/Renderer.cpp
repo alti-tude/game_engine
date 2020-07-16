@@ -49,8 +49,6 @@ void Renderer::draw(){
 }
 
 void Renderer::endBatch(){
-    for(auto it:m_index_data) std::cout << it << " ";
-    std::cout << std::endl;
     GLCall(glBindVertexArray(m_vao_id));
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, m_vertex_buffer_id));
     GLCall(glBufferSubData(GL_ARRAY_BUFFER, 0, m_vertex_data.size()*sizeof(float), (const void*)&m_vertex_data[0]));

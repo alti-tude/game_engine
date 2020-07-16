@@ -16,22 +16,22 @@ int main(){
 
     Window window = Window(800, 600, "simulator"); //GLFW INIT
     Renderer::rendererGlewInit();//GLEW INIT
-    Shader shader = Shader("res/Shaders/vertex_shader.vs", "res/Shaders/fragment_shader.fs");
-    shader.bind();
+    // Shader shader = Shader("res/Shaders/vertex_shader.vs", "res/Shaders/fragment_shader.fs");
+    // shader.bind();
     IMGUI_CHECKVERSION();
     ImGui::CreateContext();
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::StyleColorsDark();
     Renderer renderer = Renderer(); 
     ImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);
-    const char* glsl_version = "#version 330";
+    const char* glsl_version = "#version 130";
     ImGui_ImplOpenGL3_Init(glsl_version);
 
     static float f = 0.0f;
     static int counter = 0;
     while (!window.closed())
     {
-
+        glClearColor(f, 0.0f, 0.0f, 0.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         ImGui_ImplOpenGL3_NewFrame();
         ImGui_ImplGlfw_NewFrame();
@@ -46,21 +46,21 @@ int main(){
         ImGui::End();
         ImGui::Render();
 
-        std::vector<Vertex> vec;
-        Vertex v = {{-1.0f,-1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
-        vec.push_back(v);
-        v = {{1.0f,-1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
-        vec.push_back(v);
-        v = {{1.0f,1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
-        vec.push_back(v);
-        v = {{1.0f,1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
-        vec.push_back(v);
-        v = {{-1.0f,-1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
-        vec.push_back(v);
-        v = {{-1.0f,1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
-        vec.push_back(v);
+        // std::vector<Vertex> vec;
+        // Vertex v = {{-1.0f,-1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
+        // vec.push_back(v);
+        // v = {{1.0f,-1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
+        // vec.push_back(v);
+        // v = {{1.0f,1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
+        // vec.push_back(v);
+        // v = {{1.0f,1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
+        // vec.push_back(v);
+        // v = {{-1.0f,-1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
+        // vec.push_back(v);
+        // v = {{-1.0f,1.0f, 0.0f}, {f, 0.0f, 0.0f, 1.0f}};
+        // vec.push_back(v);
         renderer.startBatch();
-        renderer.drawTraingle(vec);
+        // renderer.drawTraingle(vec);
         renderer.endBatch();
         renderer.draw();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
@@ -68,7 +68,7 @@ int main(){
         window.swapBuffers();
         window.pollEvents();
     }
-    shader.unbind();
+    // shader.unbind();
     window.terminate();
     return 0;
 }
