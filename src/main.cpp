@@ -23,7 +23,7 @@ int main(){
     ImGuiIO& io = ImGui::GetIO(); (void)io;
     ImGui::StyleColorsDark();
     Renderer renderer = Renderer(); 
-    ImGui_ImplGlfw_InitForOpenGL(window.window, true);
+    ImGui_ImplGlfw_InitForOpenGL(window.getWindow(), true);
     const char* glsl_version = "#version 330";
     ImGui_ImplOpenGL3_Init(glsl_version);
 
