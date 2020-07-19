@@ -14,7 +14,7 @@ int main(){
     Renderer::rendererGlewInit();//GLEW INIT
     Shader shader = Shader("res/Shaders/vertex_shader.vs", "res/Shaders/fragment_shader.fs");
     shader.bind();
-    Renderer renderer = Renderer(); 
+    Renderer* renderer = Renderer::getInstance(); 
 
     float x = -1;
     while (!window.closed())
@@ -35,10 +35,10 @@ int main(){
         v = {{-1.0f,1.0f, 0.0f}, {0, 0.0f, 0.0f, 1.0f}};
         vec.push_back(v);
 
-        renderer.startBatch();
-        renderer.drawTraingle(vec);
-        renderer.endBatch();
-        renderer.draw();
+        renderer->startBatch();
+        renderer->drawVertices(vec);
+        renderer->endBatch();
+        renderer->draw();
 
         window.swapBuffers();
         window.pollEvents();

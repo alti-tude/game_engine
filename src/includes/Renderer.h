@@ -12,7 +12,7 @@
 #include "map"
 
 #include "Config.h"
-#include "Vertex.h"
+#include "Geometry/Vertex.h"
 
 #define GLEW_STATIC
 #define GLCall(x) GLClearError();\
@@ -35,6 +35,8 @@ static bool GLLogCall(const char* function, const char* file, int line){
 
 class Renderer{
 private:
+    static Renderer* renderer_instance;
+     
     unsigned int m_vao_id;
     unsigned int m_vertex_buffer_id;
     unsigned int m_index_buffer_id; 
@@ -42,14 +44,14 @@ private:
     
     std::vector<float> m_vertex_data;
     std::vector<unsigned int> m_index_data;
-    std::vector<Vertex> m_vertex_store;
+    Renderer();
 
 public:
-    Renderer();
+    static Renderer* getInstance();
     void draw();
     void endBatch();
     void startBatch();
-    void drawTraingle(const std::vector<Vertex>& vertices); 
+    void drawVertices(const std::vector<Vertex>& vertices); 
     
     static void rendererGlewInit();
 };

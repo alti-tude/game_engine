@@ -1,5 +1,13 @@
 #include "Renderer.h"
 
+Renderer* Renderer::renderer_instance = NULL;
+Renderer* Renderer::getInstance(){
+    if(renderer_instance==NULL) 
+        renderer_instance = new Renderer();
+    
+    return renderer_instance;
+}
+
 void Renderer::rendererGlewInit(){
     glewExperimental=GL_TRUE; // Needed in core profile
     if(glewInit()!=GLEW_OK){
@@ -38,7 +46,6 @@ Renderer::Renderer()
 void Renderer::startBatch(){
     m_vertex_data.clear();
     m_index_data.clear();
-    m_vertex_store.clear();
     GLCall(glBindVertexArray(0));
     GLCall(glBindBuffer(GL_ARRAY_BUFFER, 0));
     GLCall(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
@@ -59,38 +66,20 @@ void Renderer::endBatch(){
     GLCall(glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, m_index_data.size()*sizeof(unsigned int), (const void*)&m_index_data[0]));
 }
 
-void Renderer::drawTraingle(const std::vector<Vertex>& vertices){
+void Renderer::drawVertices(const std::vector<Vertex>& vertices){
     for(Vertex vertex:vertices){
         if(m_index_data.size()>=m_num_vertices){
             endBatch();
             draw();
             startBatch();
         } 
-        std::cout << vertex.position.x << " ";
-        std::cout << vertex.position.y << " ";
-        std::cout << vertex.position.z << "\n";
-
-        int found_at = -1;
-        for(int i=0;i<m_vertex_store.size();i++){
-            if(m_vertex_store[i] == vertex) {
-                found_at = i;
-                break;
-            }
-        }
-
-        if(found_at==-1){
-            found_at = m_vertex_store.size();
-            m_vertex_store.push_back(vertex);
-
-            m_vertex_data.push_back(vertex.position.x);
-            m_vertex_data.push_back(vertex.position.y);
-            m_vertex_data.push_back(vertex.position.z);
-            m_vertex_data.push_back(vertex.color.r);
-            m_vertex_data.push_back(vertex.color.g);
-            m_vertex_data.push_back(vertex.color.b);
-            m_vertex_data.push_back(vertex.color.a);
-        }
-
-        m_index_data.push_back(found_at);
+        m_vertex_data.push_back(vertex.position.x);
+        m_vertex_data.push_back(vertex.position.y);
+        m_vertex_data.push_back(vertex.position.z);
+        m_vertex_data.push_back(vertex.color.r);
+        m_vertex_data.push_back(vertex.color.g);
+        m_vertex_data.push_back(vertex.color.b);
+        m_vertex_data.push_back(vertex.color.a);
+        m_index_data.push_back(m_index_data.size());
     }
 }
