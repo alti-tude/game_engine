@@ -8,11 +8,10 @@ struct BoundingBox{
     glm::vec2 size;
 
     bool collide(const BoundingBox& b){
-        glm::vec2 right = point + size;
-        glm::vec2 b_right = b.point + b.size;
-        if( right.y > b.point.y && point.y < b_right.y && 
-
+        if( point.x + size.x < b.x || b.x + b.size.x < point.x
+            || point.y + size.y < b.y || b.y + b.size.y < point.y
         )
+            return false;
         return true;
     }
 };
