@@ -6,6 +6,7 @@
                 "${workspaceFolder}/**",
                 "${vcpkgRoot}/x64-linux/include",
                 "${workspaceFolder}/external/glm/**",
+                "${workspaceFolder}/includes",
                 "${workspaceFolder}/includes/**"
             ],
             "defines": [],

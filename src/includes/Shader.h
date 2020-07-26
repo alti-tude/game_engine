@@ -3,6 +3,7 @@
 
 #include "GL/glew.h"
 #include "glm/glm.hpp"
+#include "glm/gtc/type_ptr.hpp"
 
 #include "fstream"
 #include "sstream"
@@ -18,6 +19,8 @@ public:
 
     void bind() {glUseProgram(m_shader_program_id);}
     void unbind() {glUseProgram(0);}
+    void setMat4(std::string name, glm::mat4 value);
+    void set1f(std::string name, float value);
 };
 
 #endif
