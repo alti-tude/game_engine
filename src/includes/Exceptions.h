@@ -8,54 +8,53 @@ class CustomBaseException{
 private:
     static unsigned int count;
 
-    void printCount(){
-        std::cerr << "Err msg count: " << (++count);
-        std::cerr << ">>>> " << std::endl;
-    }
+    void printCount();
 public:
-    CustomBaseException(std::string message) { 
-        printCount();
-        std::cerr << message << std::endl; 
-        std::cerr << ">>>> " << std::endl;
-    }
-    CustomBaseException(std::string message, std::string cause) { 
-        printCount();
-        std::cerr << message << std::endl;
-        std::cerr << ">>>> " << std::endl;
-        std::cerr << cause << std::endl;
-        std::cerr << ">>>> " << std::endl;
-    }
+    CustomBaseException(std::string message);
+    CustomBaseException(std::string message, std::string cause);
 };
-unsigned int CustomBaseException::count = 0;
 
-class ShaderFileLoadException: CustomBaseException{
+class ShaderFileLoadException: public CustomBaseException{
 public:
     ShaderFileLoadException(std::string message, std::string cause) 
         :CustomBaseException(message, cause){}
 };
 
-class ShaderCompileException: CustomBaseException{
+class ShaderCompileException: public CustomBaseException{
 public:
     ShaderCompileException(std::string message, std::string cause) 
         :CustomBaseException(message, cause){}
 };
 
 
-class ShaderLinkException: CustomBaseException{
+class ShaderLinkException: public CustomBaseException{
 public:
     ShaderLinkException(std::string message, std::string cause) 
         :CustomBaseException(message, cause){}
 };
 
-class ComponentNameClashes: CustomBaseException{
+class ComponentNameClashes: public CustomBaseException{
 public:
     ComponentNameClashes(std::string message) 
         :CustomBaseException(message){}
 };
 
-class ComponentNameNotFound: CustomBaseException{
+class ComponentNameNotFound: public CustomBaseException{
 public:
     ComponentNameNotFound(std::string message) 
         :CustomBaseException(message){}
 };
+
+class BaseNameNotFound: public CustomBaseException{
+    public:
+        BaseNameNotFound(std::string message)
+            :CustomBaseException(message){}
+};
+
+class CameraAlreadInitialised: public CustomBaseException{
+public:
+    CameraAlreadInitialised(std::string message)
+        :CustomBaseException(message){}
+};
+
 #endif

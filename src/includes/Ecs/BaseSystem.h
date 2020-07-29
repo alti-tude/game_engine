@@ -1,7 +1,8 @@
 #ifndef BASE_SYSTEMS_H
 #define BASE_SYSTEMS_H
 
-#include "Ecs/BaseEcsStructures.h"
+#include "Ecs/BaseComponents.h"
+#include "Ecs/BaseEntity.h"
 
 #include "string"
 #include "vector"

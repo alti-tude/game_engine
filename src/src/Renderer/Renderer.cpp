@@ -83,3 +83,7 @@ void Renderer::drawVertices(const std::vector<Vertex>& vertices){
         m_index_data.push_back(m_index_data.size());
     }
 }
+
+class A{
+
+};
