@@ -17,23 +17,16 @@ private:
     Buffer(){}
 
 public:
-    static std::shared_ptr<Buffer> getInstance(){
-        if(!buffer_instance){
-            buffer_instance.reset(new Buffer());
-        }
-        return buffer_instance;
-    }
+    static std::shared_ptr<Buffer> getInstance();
 
-    void pushMessage(BaseMessage* message){
-        m_message_map[message->getName()].push_back(std::shared_ptr<BaseMessage>(message));
-    }
+    void pushMessage(BaseMessage* message);
 
     template<typename T>
     std::vector<std::shared_ptr<T> > getMessages(){
         std::string name = T::staticGetName();
         std::vector<std::shared_ptr<T> > messages;
         for(auto message: m_message_map[name]) 
-            messages.push_back(std::dynamic_pointer_cast<T>(message));
+            messages.push_back(std::static_pointer_cast<T>(message));
         return messages;
     }
     
@@ -42,10 +35,6 @@ public:
         return m_message_map[T::staticGetName()] != m_message_map.end();
     }
 
-    void reset(){
-        m_message_map.clear();
-    }
+    void reset(){ m_message_map.clear(); }
 };
-std::shared_ptr<Buffer> Buffer::buffer_instance = std::shared_ptr<Buffer>();
-
 #endif
