@@ -24,15 +24,22 @@ private:
     std::string m_base_component_name;
 
 public:
+    BaseComponent(){}
     BaseComponent(IBaseEntity *parent_entity, std::string base_component_name)
         : m_parent_entity(parent_entity), m_base_component_name(base_component_name) {}
-    virtual ~BaseComponent() { onDelete(); }
+    virtual ~BaseComponent() {}
 
     std::string getBaseComponentName() { return this->m_base_component_name; }
     IBaseEntity *getParentEntity() { return this->m_parent_entity; }
-
-    virtual void onCreate() {}
-    virtual void onDelete() {}
+    
+    BaseComponent* setParentEntity(IBaseEntity* parent_entity) {
+        this->m_parent_entity = parent_entity;
+        return this;
+    }
+    BaseComponent* setBaseComponentName(std::string base_component_name) {
+        this->m_base_component_name = base_component_name;
+        return this;
+    }
 };
 
 class BaseRenderComponent : public BaseComponent
@@ -42,6 +49,7 @@ private:
     Shader m_shader;
 
 public:
+    BaseRenderComponent(){}
     BaseRenderComponent(IBaseEntity *parent_entity) : BaseComponent(parent_entity, "BaseRenderComponent") {}
 
     virtual void initShader() = 0;
@@ -58,6 +66,7 @@ private:
     glm::mat4 m_translation;
 
 public:
+    BaseDataComponent(){}
     BaseDataComponent(IBaseEntity *parent_entity) : BaseComponent(parent_entity, "BaseDataComponent") {}
 
     virtual void scale(glm::vec2 scale);
@@ -73,6 +82,7 @@ public:
 class BaseLogicComponent : public BaseComponent
 {
 public:
+    BaseLogicComponent(){}
     BaseLogicComponent(IBaseEntity *parent_entity) : BaseComponent(parent_entity, "BaseLogicComponent") {}
     virtual void update(unsigned int frame_count) {}
     virtual void collide(IBaseEntity *other_entity) {}
