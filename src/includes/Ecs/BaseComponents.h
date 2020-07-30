@@ -46,14 +46,7 @@ public:
 
     virtual void initShader() = 0;
     virtual void preDraw(glm::mat4 PV);
-    void draw()
-    {
-        Renderer *renderer = Renderer::getInstance();
-        renderer->startBatch();
-        renderer->drawVertices(m_vertex_data);
-        renderer->endBatch();
-        renderer->draw();
-    }
+    void draw();
 };
 
 class BaseDataComponent : public BaseComponent
@@ -67,29 +60,11 @@ private:
 public:
     BaseDataComponent(IBaseEntity *parent_entity) : BaseComponent(parent_entity, "BaseDataComponent") {}
 
-    virtual void scale(glm::vec2 scale)
-    {
-        m_scale = glm::scale(m_scale, glm::vec3(scale, 1));
-    }
-    virtual void scale(float scale)
-    {
-        this->scale(glm::vec2(scale, scale));
-    }
-
-    virtual void rotate(float degrees)
-    {
-        m_rotation = glm::rotate(m_rotation, glm::radians(degrees), glm::vec3(0, 0, 1));
-    }
-
-    virtual void translateBy(glm::vec2 move_by)
-    {
-        m_translation = glm::translate(m_translation, glm::vec3(move_by, 1));
-        m_position += glm::vec2(move_by);
-    }
-    virtual void translateTo(glm::vec2 move_to)
-    {
-        translateBy(move_to - m_position);
-    }
+    virtual void scale(glm::vec2 scale);
+    virtual void scale(float scale);
+    virtual void rotate(float degrees);
+    virtual void translateBy(glm::vec2 move_by);
+    virtual void translateTo(glm::vec2 move_to);
 
     glm::vec2 getPosition() { return m_position; }
     glm::mat4 getModelMatrix() { return m_translation * m_rotation * m_scale; }
