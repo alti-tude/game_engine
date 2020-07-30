@@ -24,13 +24,11 @@ public:
     static std::string staticGetName(){return name;}
 
     glm::vec2 getPosition(){return position;}
-    void setPosition(glm::vec2 position){
+    CarPositionMessage* setPosition(glm::vec2 position){
         this->position = position;
         return this;
     }
 };
-const std::string CarPositionMessage::name = "CarPosition";
-
 
 class CarRandomMessage: public BaseMessage{
 private: 
@@ -44,8 +42,10 @@ public:
     static std::string staticGetName(){return name;}
     
     std::string getMsg(){return msg;}
-    void getMsg(std::string msg){this->msg = msg;}
+    CarRandomMessage* setMsg(std::string msg){
+        this->msg = msg;
+        return this;
+    }
 };
-const std::string CarRandomMessage::name = "CarRandom";
 
 #endif
