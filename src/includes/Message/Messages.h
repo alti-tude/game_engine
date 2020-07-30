@@ -24,7 +24,10 @@ public:
     static std::string staticGetName(){return name;}
 
     glm::vec2 getPosition(){return position;}
-    void setPosition(glm::vec2 position){this->position = position;}
+    void setPosition(glm::vec2 position){
+        this->position = position;
+        return this;
+    }
 };
 const std::string CarPositionMessage::name = "CarPosition";
 
