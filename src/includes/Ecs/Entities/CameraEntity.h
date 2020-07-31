@@ -3,28 +3,33 @@
 
 #include "Ecs/BaseComponents.h"
 #include "Ecs/BaseEntity.h"
+#include "Ecs/Data.h"
 #include "Config.h"
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
+#include "memory"
 
 class CameraEntity: public BaseEntity{
 public:
-    class DataComponent : public BaseDataComponent{
+    class TransformComponent : public BaseTransformComponent{
     private:
         glm::vec2 up;
         glm::mat4 P;
     public:
-        DataComponent(BaseEntity* parent_entity);
+        TransformComponent(unsigned int parent_id);
         void rotate(float degrees);
-        glm::mat4 getPV();
+        glm::mat4 getTransformMatrix();
     };
 
-    CameraEntity()
+    CameraEntity(unsigned int id)
         :BaseEntity("CameraEntity")
     {
-        this->registerComponent("DataComponent", new DataComponent(this));
+        this->setId(id);
+
+        unsigned int component_id = Data::getInstance()->registerComponent(new TransformComponent(this->getId()));
+        this->addComponent(TransformComponent::name, component_id);
     }
 };
 

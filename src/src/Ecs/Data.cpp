@@ -7,21 +7,41 @@ std::shared_ptr<Data> Data::getInstance(){
     return data_instance;
 }
 
-void Data::addEntity(BaseEntity* entity) {
-    this->m_entities.push_back(std::shared_ptr<BaseEntity>(entity));
+void Data::deleteComponent(const std::string& name, unsigned int idx){
+    m_entities[m_component_lists[name][idx]->getParentEntityId()]->deleteComponent(name);
+    swap(m_component_lists[name][idx], m_component_lists[name].back());
+    m_component_lists[name].pop_back();
+    
+    //change the parent of the component to point to the new index
+    if(m_component_lists[name].size()!=0)
+        m_entities[m_component_lists[name][idx]->getParentEntityId()]->setComponentIdx(name, idx);
 }
 
-void Data::addCamera(CameraEntity* camera) {
-    if(m_camera) 
-        throw CameraAlreadInitialised("Camera already initialised in Data object");
-    m_camera.reset(camera);
-    addEntity(camera);
+void Data::deleteEntity(unsigned int idx){
+    for(auto component_name: m_entities[idx]->getComponentNames())
+        deleteComponent(component_name, m_entities[idx]->getComponentIdx(component_name));
+    
+    swap(m_entities[idx], m_entities.back());
+    swap(m_entities_to_delete[idx], m_entities_to_delete.back());
+    m_entities.pop_back();
+    
+    //change components of the entity to point to new index
+    if(m_entities.size()!=0)
+        for(auto component_name: m_entities[idx]->getComponentNames())
+            m_component_lists[component_name][m_entities[idx]->getComponentIdx(component_name)]->setParentEntityId(idx);
+}
+
+void Data::removeEntity(unsigned int idx){
+    if (idx>=this->m_entities.size())
+        throw InvalidEntityIdx("Index >= num entities");
+    this->m_entities_to_delete[idx] = 1;
 }
 
 void Data::garbageCollect(){
-    std::vector<std::shared_ptr<BaseEntity> > alive_entities;
-    for(auto entity: m_entities)
-        if(!(entity->shouldDelete()))
-            alive_entities.push_back(entity);
-    m_entities = alive_entities;
+    for(int i=0;i<m_entities.size();){
+        if(m_entities_to_delete[i]) 
+            deleteEntity(i);
+        else
+            i++;
+    }
 }

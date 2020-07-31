@@ -27,18 +27,15 @@ int main(){
     Window window = Window(Config::screen_width, Config::screen_height, "simulator"); //GLFW INIT
     std::shared_ptr<Renderer> renderer = Renderer::getInstance();
 
-    Data::getInstance()->addCamera(new CameraEntity());
-    Data::getInstance()->addEntity(new CarEntity());
-    Data::getInstance()->addEntity(new CarEntity());
-    Data::getInstance()->getEntities()[0]->markForDelete();
-    Data::getInstance()->garbageCollect();
-    std::static_pointer_cast<CameraEntity::DataComponent>(Data::getInstance()->getCamera()->getComponent("DataComponent"))->rotate(30);
+    Data::getInstance()->addEntity<CarEntity>();
+    Data::getInstance()->addCamera<CameraEntity>();
+    Data::getInstance()->getComponent<BaseTransformComponent>(Data::getInstance()->getCamera()->getId())->translateBy(glm::vec2(200,2));
     RenderSystem render_system = RenderSystem();
 
     while (!window.closed())
     {
         glClear(GL_COLOR_BUFFER_BIT);
-        render_system.run();    
+        render_system.process();    
         window.swapBuffers();
         window.pollEvents();
     }

@@ -32,6 +32,12 @@ public:
         :CustomBaseException(message){}
 };
 
+class InvalidEntityIdx: public CustomBaseException{
+public:
+    InvalidEntityIdx(std::string message)
+        :CustomBaseException(message){}
+};
+
 class UniformNotFoundException: public CustomBaseException{
 public:
     UniformNotFoundException(std::string message)

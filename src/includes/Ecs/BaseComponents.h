@@ -16,83 +16,62 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-
-class BaseComponent
-{
+class BaseComponent{
 protected:
-    IBaseEntity *m_parent_entity;
-    std::string m_base_component_name;
-
+    unsigned int m_parent_entity_id;
+    unsigned int m_component_id;
 public:
+    BaseComponent(unsigned int parent_id)
+        :m_parent_entity_id(parent_id){}
     BaseComponent(){}
-    BaseComponent(IBaseEntity *parent_entity, std::string base_component_name)
-        : m_parent_entity(parent_entity), m_base_component_name(base_component_name) {}
-    virtual ~BaseComponent() {}
+    virtual ~BaseComponent(){}
 
-    std::string getBaseComponentName() { return this->m_base_component_name; }
-    IBaseEntity *getParentEntity() { return this->m_parent_entity; }
-    
-    BaseComponent* setParentEntity(IBaseEntity* parent_entity) {
-        this->m_parent_entity = parent_entity;
-        return this;
-    }
-    BaseComponent* setBaseComponentName(std::string base_component_name) {
-        this->m_base_component_name = base_component_name;
-        return this;
-    }
+    void setParentEntityId(unsigned int id){this->m_parent_entity_id = id;}
+    unsigned int getParentEntityId() {return this->m_parent_entity_id;}
 };
 
-class BaseRenderComponent : public BaseComponent
-{
+class BaseRenderComponent: public BaseComponent{
 protected:
-    std::vector<Vertex> m_vertex_data;
     Shader m_shader;
-
+    std::vector<Vertex> m_mesh_data;
 public:
-    BaseRenderComponent(){}
-    BaseRenderComponent(IBaseEntity *parent_entity) 
-        : BaseComponent(parent_entity, "BaseRenderComponent") {}
+    static const std::string name;
 
-    virtual BaseRenderComponent* setVertexData(const std::vector<Vertex>& vertex_data){
-        this->m_vertex_data = vertex_data;
-        return this;
-    }
-
-    virtual void preDraw(glm::mat4 PV);
-    void draw();
+    BaseRenderComponent(){initShader();}
+    BaseRenderComponent(unsigned int parent_id)
+        : BaseComponent(parent_id){initShader();}
+    virtual void initShader(){m_shader = Shader();}
+    virtual void draw(glm::mat4 PVM);
 };
 
-class BaseDataComponent : public BaseComponent
-{
+class BaseTransformComponent: public BaseComponent{
 protected:
     glm::vec2 m_position;
     glm::mat4 m_rotation;
-    glm::mat4 m_scale;
     glm::mat4 m_translation;
-
+    glm::mat4 m_scale;
 public:
-    BaseDataComponent(){}
-    BaseDataComponent(IBaseEntity *parent_entity) 
-        : BaseComponent(parent_entity, "BaseDataComponent"), m_position(glm::vec2(0,0)), m_translation(glm::mat4(1)), m_rotation(glm::mat4(1)), m_scale(glm::mat4(1)) {}
-
+    static const std::string name;
+    
+    BaseTransformComponent(){}
+    BaseTransformComponent(unsigned int parent_id)
+        :BaseComponent(parent_id), m_rotation(glm::mat4(1)), m_translation(glm::mat4(1)), m_scale(glm::mat4(1)){}
     virtual void scale(glm::vec2 scale);
     virtual void scale(float scale);
     virtual void rotate(float degrees);
     virtual void translateBy(glm::vec2 move_by);
     virtual void translateTo(glm::vec2 move_to);
-
-    glm::vec2 getPosition() { return m_position; }
-    glm::mat4 getModelMatrix() { return m_translation * m_rotation * m_scale; }
+    virtual glm::mat4 getTransformMatrix(){return m_translation*m_rotation*m_scale;}
 };
 
-class BaseLogicComponent : public BaseComponent
-{
+class BaseLogicComponent: public BaseComponent{
 public:
-    BaseLogicComponent(){}
-    BaseLogicComponent(IBaseEntity *parent_entity) : BaseComponent(parent_entity, "BaseLogicComponent") {}
-    virtual void update(unsigned int frame_count) {}
-    virtual void collide(IBaseEntity *other_entity) {}
-};
+    static const std::string name;
 
+    BaseLogicComponent(){}
+    BaseLogicComponent(unsigned int parent_id)
+        :BaseComponent(parent_id){}
+    virtual void process(unsigned int frame_count){}    
+};
 
 #endif

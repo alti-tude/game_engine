@@ -10,8 +10,7 @@
 
 class RenderSystem : public BaseSystem{
 public:
-    std::vector<bool> filter();
-    void process(std::vector<bool> filter_mask);
+    void process();
 };
 
 #endif
