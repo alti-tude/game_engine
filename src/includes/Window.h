@@ -1,7 +1,10 @@
 #ifndef WINDOW_H
 #define WINDOW_H
 
+#include "Exceptions.h"
+
 #include "GLFW/glfw3.h"
+
 #include "iostream"
 #include "string"
 

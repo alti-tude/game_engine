@@ -14,7 +14,7 @@ class Shader{
 private:
     unsigned int m_shader_program_id;
 public:
-    Shader() :Shader("res/Shaders/defaultVertexShader.vs", "res/Shaders/defaultFragmentShader.fs") {}
+    Shader() :Shader("res/Shaders/default_vertex_shader.vs", "res/Shaders/default_fragment_shader.fs") {}
     Shader(const std::string& vertex_file, const std::string& fragment_file);
 
     void bind() {glUseProgram(m_shader_program_id);}

@@ -1,6 +1,10 @@
 #ifndef RENDERER_H
 #define RENDERER_H
 
+#include "Config.h"
+#include "Geometry/Vertex.h"
+#include "Exceptions.h"
+
 #include "GL/glew.h"
 #include "GLFW/glfw3.h"
 
@@ -10,9 +14,8 @@
 #include "vector"
 #include "iostream"
 #include "map"
+#include "memory"
 
-#include "Config.h"
-#include "Geometry/Vertex.h"
 
 #define GLEW_STATIC
 #define GLCall(x) GLClearError();\
@@ -35,7 +38,7 @@ static bool GLLogCall(const char* function, const char* file, int line){
 
 class Renderer{
 private:
-    static Renderer* renderer_instance;
+    static std::shared_ptr<Renderer> renderer_instance;
      
     unsigned int m_vao_id;
     unsigned int m_vertex_buffer_id;
@@ -47,13 +50,11 @@ private:
     Renderer();
 
 public:
-    static Renderer* getInstance();
+    static std::shared_ptr<Renderer> getInstance();
     void draw();
     void endBatch();
     void startBatch();
     void drawVertices(const std::vector<Vertex>& vertices); 
-    
-    static void rendererGlewInit();
 };
 
 #endif

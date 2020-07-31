@@ -7,6 +7,7 @@
 
 #include "glm/glm.hpp"
 
+#include "Config.h"
 #include "Renderer.h"
 #include "Window.h"
 #include "Shader.h"
@@ -16,50 +17,32 @@
 
 #include "Ecs/BaseComponents.h"
 #include "Ecs/BaseEntity.h"
+#include "Ecs/Systems/RenderSystem.h"
+#include "Ecs/Entities/CarEntity.h"
+#include "Ecs/Entities/CameraEntity.h"
+#include "Ecs/Data.h"
 
 
 int main(){
-    std::shared_ptr<Buffer> buffer = Buffer::getInstance();
-    buffer->pushMessage(new CarPositionMessage(glm::vec2(1,2)));
-    buffer->pushMessage(new CarRandomMessage("random"));
-    buffer->pushMessage(new CarPositionMessage(glm::vec2(2,4)));
-    buffer->pushMessage(new CarRandomMessage("random2"));
-    std::vector<std::shared_ptr<CarRandomMessage> > messages = buffer->getMessages<CarRandomMessage>();
-    for(auto msg:messages) std::cout << msg->getMsg() << std::endl;
-    // Window window = Window(800, 600, "simulator"); //GLFW INIT
-    // Renderer::rendererGlewInit();//GLEW INIT
-    // Shader shader = Shader("res/Shaders/vertex_shader.vs", "res/Shaders/fragment_shader.fs");
-    // shader.bind();
-    // Renderer* renderer = Renderer::getInstance(); 
+    Window window = Window(Config::screen_width, Config::screen_height, "simulator"); //GLFW INIT
+    std::shared_ptr<Renderer> renderer = Renderer::getInstance();
 
-    // float x = -1;
-    // while (!window.closed())
-    // {
-    //     glClear(GL_COLOR_BUFFER_BIT);
+    Data::getInstance()->addCamera(new CameraEntity());
+    Data::getInstance()->addEntity(new CarEntity());
+    Data::getInstance()->addEntity(new CarEntity());
+    Data::getInstance()->getEntities()[0]->markForDelete();
+    Data::getInstance()->garbageCollect();
+    std::static_pointer_cast<CameraEntity::DataComponent>(Data::getInstance()->getCamera()->getComponent("DataComponent"))->rotate(30);
+    RenderSystem render_system = RenderSystem();
 
-    //     std::vector<Vertex> vec;
-    //     Vertex v = {{-1.0f,-1.0f, 0.0f}, {1.0, 0.0f, 0.0f, 1.0f}};
-    //     vec.push_back(v);
-    //     v = {{1.0f,-1.0f, 0.0f}, {0.0f, 1.0f, 0.0f, 1.0f}};
-    //     vec.push_back(v);
-    //     v = {{1.0f,1.0f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}};
-    //     vec.push_back(v);
-    //     v = {{1.0f,1.0f, 0.0f}, {0.0f, 0.0f, 1.0f, 1.0f}};
-    //     vec.push_back(v);
-    //     v = {{-1.0f,-1.0f, 0.0f}, {1.0, 0.0f, 0.0f, 1.0f}};
-    //     vec.push_back(v);
-    //     v = {{-1.0f,1.0f, 0.0f}, {0, 0.0f, 0.0f, 1.0f}};
-    //     vec.push_back(v);
-
-    //     renderer->startBatch();
-    //     renderer->drawVertices(vec);
-    //     renderer->endBatch();
-    //     renderer->draw();
-
-    //     window.swapBuffers();
-    //     window.pollEvents();
-    // }
-    // shader.unbind();
-    // window.terminate();
+    while (!window.closed())
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        render_system.run();    
+        window.swapBuffers();
+        window.pollEvents();
+    }
+    window.terminate();
+    
     return 0;
 }

@@ -1,0 +1,11 @@
+set(SOURCES 
+    ${SOURCES}
+    ${CMAKE_CURRENT_LIST_DIR}/Data.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/BaseEntity.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Systems/RenderSystem.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Entities/CameraEntity.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/Entities/CarEntity.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/BaseComponents/BaseDataComponent.cpp
+    ${CMAKE_CURRENT_LIST_DIR}/BaseComponents/BaseRenderComponent.cpp
+    PARENT_SCOPE
+)

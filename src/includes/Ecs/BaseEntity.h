@@ -27,6 +27,9 @@ public:
     std::shared_ptr<void> getLastComponentByBasename(std::string base_component_name);
     std::vector<std::string>& getComponentNamesByBasename(std::string base_component_name);
     void registerComponent(std::string component_name, BaseComponent *component);
+    
+    void markForDelete(){this->to_delete=true;}
+    bool shouldDelete(){return this->to_delete;}
 };
 
 #endif

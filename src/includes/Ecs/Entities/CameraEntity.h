@@ -3,25 +3,29 @@
 
 #include "Ecs/BaseComponents.h"
 #include "Ecs/BaseEntity.h"
+#include "Config.h"
+
+#include "glm/glm.hpp"
+#include "glm/gtc/matrix_transform.hpp"
+
 
 class CameraEntity: public BaseEntity{
-private:
-    class DataComponent : public BaseDataComponent{
-    public:
-        DataComponent(BaseEntity* parent_entity)
-            : BaseDataComponent(parent_entity)
-        {
-
-        }
-    };
 public:
+    class DataComponent : public BaseDataComponent{
+    private:
+        glm::vec2 up;
+        glm::mat4 P;
+    public:
+        DataComponent(BaseEntity* parent_entity);
+        void rotate(float degrees);
+        glm::mat4 getPV();
+    };
+
     CameraEntity()
         :BaseEntity("CameraEntity")
     {
-        BaseDataComponent* data_component = new DataComponent(this);
-        this->registerComponent("DataComponent", data_component);
+        this->registerComponent("DataComponent", new DataComponent(this));
     }
-
 };
 
 #endif

@@ -87,13 +87,13 @@ Shader::Shader(const std::string& vertex_file, const std::string& fragment_file)
 void Shader::setMat4(std::string name, glm::mat4 value){
     this->bind();
     unsigned int location = glGetUniformLocation(m_shader_program_id, name.c_str());
-    if(location == -1) std::cerr << "Uniform " + name + " not found\n";
-    else glUniformMatrix4fv(location, 1, GL_FALSE, glm::value_ptr(value));
+    if(location == -1) std::cerr << "Uniform " + name + " not found" << std::endl;
+    else glUniformMatrix4fv(location, 1, GL_FALSE, &value[0][0]);
 }
 
 void Shader::set1f(std::string name, float value){
     this->bind();
     unsigned int location = glGetUniformLocation(m_shader_program_id, name.c_str());
-    if(location == -1) std::cerr << "Uniform " + name + " not found\n";
+    if(location == -1) std::cerr << "Uniform " + name + " not found" << std::endl;
     else glUniform1f(location, value); 
 }

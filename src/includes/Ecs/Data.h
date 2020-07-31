@@ -17,17 +17,14 @@ private:
     std::shared_ptr<CameraEntity> m_camera;
 
     static std::shared_ptr<Data> data_instance;
-    Data();
+    Data(){};
 public: 
-    static std::shared_ptr<Data> getInstance(){
-        if(!data_instance)
-            data_instance.reset(new Data());
-        return data_instance;
-    }
+    static std::shared_ptr<Data> getInstance();
+
     std::vector<std::shared_ptr<BaseEntity> >& getEntities(){return this->m_entities;}
     std::shared_ptr<CameraEntity> getCamera(){return this->m_camera;}
     void addEntity(BaseEntity* entity);
     void addCamera(CameraEntity* camera);
+    void garbageCollect();
 };
-std::shared_ptr<Data> Data::data_instance = std::shared_ptr<Data>();
 #endif

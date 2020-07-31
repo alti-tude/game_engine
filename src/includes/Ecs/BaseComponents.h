@@ -19,7 +19,7 @@
 
 class BaseComponent
 {
-private:
+protected:
     IBaseEntity *m_parent_entity;
     std::string m_base_component_name;
 
@@ -44,22 +44,27 @@ public:
 
 class BaseRenderComponent : public BaseComponent
 {
-private:
+protected:
     std::vector<Vertex> m_vertex_data;
     Shader m_shader;
 
 public:
     BaseRenderComponent(){}
-    BaseRenderComponent(IBaseEntity *parent_entity) : BaseComponent(parent_entity, "BaseRenderComponent") {}
+    BaseRenderComponent(IBaseEntity *parent_entity) 
+        : BaseComponent(parent_entity, "BaseRenderComponent") {}
 
-    virtual void initShader() = 0;
+    virtual BaseRenderComponent* setVertexData(const std::vector<Vertex>& vertex_data){
+        this->m_vertex_data = vertex_data;
+        return this;
+    }
+
     virtual void preDraw(glm::mat4 PV);
     void draw();
 };
 
 class BaseDataComponent : public BaseComponent
 {
-private:
+protected:
     glm::vec2 m_position;
     glm::mat4 m_rotation;
     glm::mat4 m_scale;
@@ -67,7 +72,8 @@ private:
 
 public:
     BaseDataComponent(){}
-    BaseDataComponent(IBaseEntity *parent_entity) : BaseComponent(parent_entity, "BaseDataComponent") {}
+    BaseDataComponent(IBaseEntity *parent_entity) 
+        : BaseComponent(parent_entity, "BaseDataComponent"), m_position(glm::vec2(0,0)), m_translation(glm::mat4(1)), m_rotation(glm::mat4(1)), m_scale(glm::mat4(1)) {}
 
     virtual void scale(glm::vec2 scale);
     virtual void scale(float scale);

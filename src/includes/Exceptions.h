@@ -14,6 +14,30 @@ public:
     CustomBaseException(std::string message, std::string cause);
 };
 
+class GlewInitException: public CustomBaseException{
+public:
+    GlewInitException(std::string message)
+        :CustomBaseException(message){}
+};
+
+class GlfwInitException: public CustomBaseException{
+public:
+    GlfwInitException(std::string message)
+        :CustomBaseException(message){}
+};
+
+class WindowCreationException: public CustomBaseException{
+public:
+    WindowCreationException(std::string message)
+        :CustomBaseException(message){}
+};
+
+class UniformNotFoundException: public CustomBaseException{
+public:
+    UniformNotFoundException(std::string message)
+        :CustomBaseException(message){}
+};
+
 class ShaderFileLoadException: public CustomBaseException{
 public:
     ShaderFileLoadException(std::string message, std::string cause) 
