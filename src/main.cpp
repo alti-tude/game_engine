@@ -28,6 +28,9 @@ int main(){
     std::shared_ptr<Renderer> renderer = Renderer::getInstance();
 
     Data::getInstance()->addEntity<CarEntity>();
+    Data::getInstance()->addEntity<CarEntity>();
+    Data::getInstance()->removeEntity(1);
+    Data::getInstance()->garbageCollect();
     Data::getInstance()->addCamera<CameraEntity>();
     Data::getInstance()->getComponent<BaseTransformComponent>(Data::getInstance()->getCamera()->getId())->translateBy(glm::vec2(200,2));
     RenderSystem render_system = RenderSystem();

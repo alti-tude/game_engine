@@ -1,5 +1,6 @@
 #include "Ecs/BaseComponents.h"
 
+//TODO return this from transforms so that they can be chained
 const std::string BaseTransformComponent::name = "TransformComponent";
 
 void BaseTransformComponent::scale(glm::vec2 scale){

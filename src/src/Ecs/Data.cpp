@@ -13,7 +13,7 @@ void Data::deleteComponent(const std::string& name, unsigned int idx){
     m_component_lists[name].pop_back();
     
     //change the parent of the component to point to the new index
-    if(m_component_lists[name].size()!=0)
+    if(idx<m_component_lists[name].size())
         m_entities[m_component_lists[name][idx]->getParentEntityId()]->setComponentIdx(name, idx);
 }
 
@@ -26,7 +26,7 @@ void Data::deleteEntity(unsigned int idx){
     m_entities.pop_back();
     
     //change components of the entity to point to new index
-    if(m_entities.size()!=0)
+    if(idx<m_entities.size())
         for(auto component_name: m_entities[idx]->getComponentNames())
             m_component_lists[component_name][m_entities[idx]->getComponentIdx(component_name)]->setParentEntityId(idx);
 }
