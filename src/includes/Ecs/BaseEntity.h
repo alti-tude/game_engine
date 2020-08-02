@@ -2,7 +2,6 @@
 #define BASE_ENTITY_H
 
 #include "Ecs/BaseComponents.h"
-#include "Ecs/IBaseEntity.h"
 
 #include "string"
 #include "map"

@@ -26,9 +26,11 @@ void Data::deleteEntity(unsigned int idx){
     m_entities.pop_back();
     
     //change components of the entity to point to new index
-    if(idx<m_entities.size())
+    if(idx<m_entities.size()){
         for(auto component_name: m_entities[idx]->getComponentNames())
             m_component_lists[component_name][m_entities[idx]->getComponentIdx(component_name)]->setParentEntityId(idx);
+        m_entities[idx]->setId(idx);
+    }
 }
 
 void Data::removeEntity(unsigned int idx){

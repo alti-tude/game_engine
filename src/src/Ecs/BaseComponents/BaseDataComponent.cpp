@@ -11,8 +11,13 @@ void BaseTransformComponent::scale(float scale){
     this->scale(glm::vec2(scale, scale));
 }
 
-void BaseTransformComponent::rotate(float degrees){
+void BaseTransformComponent::baseRotate(float degrees){
     m_rotation = glm::rotate(m_rotation, glm::radians(degrees), glm::vec3(0, 0, 1));
+    m_local_x_axis = glm::rotate(m_local_x_axis, glm::radians(degrees));
+    m_local_y_axis = glm::rotate(m_local_y_axis, glm::radians(degrees));
+}
+void BaseTransformComponent::rotate(float degrees){
+    baseRotate(degrees);
 }
 
 void BaseTransformComponent::translateBy(glm::vec2 move_by){

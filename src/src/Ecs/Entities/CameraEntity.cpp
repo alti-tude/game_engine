@@ -8,10 +8,8 @@ CameraEntity::TransformComponent::TransformComponent(unsigned int parent_id)
 }
 
 void CameraEntity::TransformComponent::rotate(float degrees){
-    m_rotation = glm::rotate(m_rotation, glm::radians(degrees), glm::vec3(0, 0, 1));
-    
-    glm::vec4 new_up = m_rotation * glm::vec4(up,0,1);
-    up = glm::vec2(new_up.x, new_up.y);
+    this->baseRotate(degrees);
+    up = glm::rotate(up, glm::radians(degrees));
 }
 
 glm::mat4 CameraEntity::TransformComponent::getTransformMatrix(){

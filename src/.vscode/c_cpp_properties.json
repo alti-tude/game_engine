@@ -7,7 +7,7 @@
                 "${vcpkgRoot}/x64-linux/include",
                 "${workspaceFolder}/external/glm/**",
                 "${workspaceFolder}/includes",
-                "${workspaceFolder}/includes/**"
+                "${workspaceFolder}/includes/*"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc", 

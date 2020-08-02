@@ -6,8 +6,6 @@
 #include "Shader.h"
 #include "Exceptions.h"
 
-#include "Ecs/IBaseEntity.h"
-
 #include "vector"
 #include "string"
 #include "map"
@@ -15,6 +13,7 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/rotate_vector.hpp"
 
 class BaseComponent{
 protected:
@@ -47,6 +46,8 @@ public:
 class BaseTransformComponent: public BaseComponent{
 protected:
     glm::vec2 m_position;
+    glm::vec2 m_local_x_axis;
+    glm::vec2 m_local_y_axis;
     glm::mat4 m_rotation;
     glm::mat4 m_translation;
     glm::mat4 m_scale;
@@ -55,9 +56,17 @@ public:
     
     BaseTransformComponent(){}
     BaseTransformComponent(unsigned int parent_id)
-        :BaseComponent(parent_id), m_rotation(glm::mat4(1)), m_translation(glm::mat4(1)), m_scale(glm::mat4(1)){}
+        :BaseComponent(parent_id), 
+        m_rotation(glm::mat4(1)), 
+        m_translation(glm::mat4(1)), 
+        m_scale(glm::mat4(1)),
+        m_position(glm::vec2(0,0)),
+        m_local_x_axis(glm::vec2(1,0)),
+        m_local_y_axis(glm::vec2(0,1)){}
+    
     virtual void scale(glm::vec2 scale);
     virtual void scale(float scale);
+    void baseRotate(float degrees);
     virtual void rotate(float degrees);
     virtual void translateBy(glm::vec2 move_by);
     virtual void translateTo(glm::vec2 move_to);
@@ -71,7 +80,20 @@ public:
     BaseLogicComponent(){}
     BaseLogicComponent(unsigned int parent_id)
         :BaseComponent(parent_id){}
-    virtual void process(unsigned int frame_count){}    
+    virtual void process(unsigned int frame_count){}
+};
+
+class BaseKinematicComponent: public BaseComponent{
+protected:
+    glm::vec2 velocity;
+    glm::vec2 acceleration;
+public:
+    static const std::string name;
+
+    BaseKinematicComponent(){}
+    BaseKinematicComponent(unsigned int parent_id)
+        :BaseComponent(parent_id){}
+    virtual void collide(BaseKinematicComponent* other_component){}
 };
 
 #endif

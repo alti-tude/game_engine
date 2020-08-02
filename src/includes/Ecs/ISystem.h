@@ -9,11 +9,11 @@
 #include "vector"
 #include "memory"
 
-class BaseSystem{
+class ISystem{
 protected:
 public:
-    BaseSystem(){}
-    virtual ~BaseSystem(){}
-    virtual void process() = 0;
+    ISystem(){}
+    virtual ~ISystem(){}
+    virtual void process();
 };
 #endif
