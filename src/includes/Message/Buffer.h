@@ -19,7 +19,10 @@ private:
 public:
     static std::shared_ptr<Buffer> getInstance();
 
-    void pushMessage(BaseMessage* message);
+    template<typename T>
+    void pushMessage(T* message){
+        m_message_map[T::name].push_back(std::shared_ptr<BaseMessage>(message));
+    }
 
     template<typename T>
     std::vector<std::shared_ptr<T> > getMessages(){

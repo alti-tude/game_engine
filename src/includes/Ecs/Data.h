@@ -17,8 +17,9 @@ private:
     std::vector<bool> m_entities_to_delete;
     std::shared_ptr<BaseEntity> m_camera;
 
+    unsigned int m_frame_count;
     static std::shared_ptr<Data> data_instance;
-    Data(){};
+    Data():m_frame_count(0){};
 public: 
     static std::shared_ptr<Data> getInstance();
 
@@ -60,5 +61,8 @@ public:
     void deleteEntity(unsigned int idx);
     void removeEntity(unsigned int idx);
     void garbageCollect();
+
+    unsigned int getFrameCount(){return this->m_frame_count;}
+    void tick(){this->m_frame_count++;}
 };
 #endif

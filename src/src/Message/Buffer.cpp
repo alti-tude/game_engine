@@ -8,7 +8,3 @@ std::shared_ptr<Buffer> Buffer::getInstance(){
     }
     return buffer_instance;
 }
-
-void Buffer::pushMessage(BaseMessage* message){
-    m_message_map[message->getName()].push_back(std::shared_ptr<BaseMessage>(message));
-}

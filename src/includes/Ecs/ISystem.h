@@ -12,8 +12,7 @@
 class ISystem{
 protected:
 public:
-    ISystem(){}
     virtual ~ISystem(){}
-    virtual void process();
+    virtual void process(){};
 };
 #endif

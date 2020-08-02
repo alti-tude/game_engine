@@ -5,6 +5,7 @@
 #include "Renderer.h"
 #include "Shader.h"
 #include "Exceptions.h"
+#include "Geometry/Vector.h"
 
 #include "vector"
 #include "string"
@@ -80,20 +81,29 @@ public:
     BaseLogicComponent(){}
     BaseLogicComponent(unsigned int parent_id)
         :BaseComponent(parent_id){}
-    virtual void process(unsigned int frame_count){}
+    virtual void process(){}
 };
 
 class BaseKinematicComponent: public BaseComponent{
 protected:
-    glm::vec2 velocity;
-    glm::vec2 acceleration;
+    glm::vec2 m_velocity;
+    glm::vec2 m_acceleration;
 public:
     static const std::string name;
 
     BaseKinematicComponent(){}
     BaseKinematicComponent(unsigned int parent_id)
-        :BaseComponent(parent_id){}
+        :BaseComponent(parent_id), m_velocity(glm::vec2(0,0)), m_acceleration(glm::vec2(0,0)){}
     virtual void collide(BaseKinematicComponent* other_component){}
+    virtual void processAcceleration();
+    virtual void processVelocity();
+    virtual void rotateAcceleration(float degrees);
+    virtual void rotateVelocity(float degrees);
+    
+    void setVelocity(glm::vec2 velocity){this->m_velocity = velocity;}
+    glm::vec2 getVelocity(){return this->m_velocity;}
+    void setAcceleration(glm::vec2 acceleration){this->m_acceleration = acceleration;}
+    glm::vec2 getAcceleration(){return this->m_acceleration;}
 };
 
 #endif
