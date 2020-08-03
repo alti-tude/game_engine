@@ -65,11 +65,15 @@ public:
         m_local_x_axis(glm::vec2(1,0)),
         m_local_y_axis(glm::vec2(0,1)){}
     
+    void baseScale(glm::vec2 scale);
     virtual void scale(glm::vec2 scale);
+    void baseScale(float scale);
     virtual void scale(float scale);
     void baseRotate(float degrees);
     virtual void rotate(float degrees);
+    void baseTranslateBy(glm::vec2 move_by);
     virtual void translateBy(glm::vec2 move_by);
+    void baseTranslateTo(glm::vec2 move_to);
     virtual void translateTo(glm::vec2 move_to);
     virtual glm::mat4 getTransformMatrix(){return m_translation*m_rotation*m_scale;}
 };
